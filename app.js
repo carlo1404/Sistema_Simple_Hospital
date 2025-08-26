@@ -25,7 +25,7 @@ function main() {
     let opcion = '';
     do {
         mostrarMenuPrincipal();
-        opcion = readlineSync.question('Seleccione una opción: ');
+        opcion = readlineSync.question('Seleccione una opcion: ');
         switch (opcion) {
         case '1':
             pacienteController.mostrarMenuPacientes();
@@ -46,7 +46,7 @@ function main() {
             console.log('Saliendo del sistema...');
             break;
         default:
-            console.log('Opción no válida.');
+            console.log('Opcion no válida.');
         }
 
     } while (opcion !== '6'); // <-- ACTUALIZADO
