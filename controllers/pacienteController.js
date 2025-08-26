@@ -11,7 +11,7 @@ function validarCampo(mensaje, campo) {
     do {
         valor = readlineSync.question(mensaje).trim();
         if (valor === "" || /^\s+$/.test(valor)) {
-            console.log(` El campo "${campo}" no puede estar vaco ni contener solo espacios.`);
+            console.log(`Error: El campo "${campo}" no puede estar vacio ni contener solo espacios.`);
         }
     } while (valor === "" || /^\s+$/.test(valor));
     return valor;
@@ -22,13 +22,13 @@ function validarNumero(mensaje, campo) {
     do {
         valor = readlineSync.question(mensaje).trim();
         if (valor === "" || /^\s+$/.test(valor)) {
-            console.log(` El campo "${campo}" no puede estar vacio.`);
+            console.log(`Error: El campo "${campo}" no puede estar vacio.`);
             valor = null;
         } else if (isNaN(valor)) {
-            console.log(` El campo "${campo}" debe ser un número valido.`);
+            console.log(`Error: El campo "${campo}" debe ser un numero valido.`);
             valor = null;
         } else if (Number(valor) < 0) {
-            console.log(` El campo "${campo}" no puede ser negativo.`);
+            console.log(`Error: El campo "${campo}" no puede ser negativo.`);
             valor = null;
         }
     } while (valor === null);
@@ -43,26 +43,26 @@ function validarFecha(mensaje) {
         fecha = new Date(input);
         if (!isNaN(fecha.getTime()) && input.match(/^\d{4}-\d{2}-\d{2}$/)) {
             if (fecha > new Date()) {
-                console.log(" La fecha no puede ser en el futuro.");
+                console.log("Error: La fecha no puede ser en el futuro.");
             } else {
                 fechaValida = true;
             }
         } else {
-            console.log(" Fecha inválida. Use el formato YYYY-MM-DD");
+            console.log("Error: Fecha invalida. Use el formato YYYY-MM-DD");
         }
     }
     return fecha;
 }
 
 function mostrarMenuPacientes() {
-    console.log("\n----- Gestión de Pacientes -----");
+    console.log("\n----- Gestion de Pacientes -----");
     console.log("1. Registrar Paciente");
     console.log("2. Modificar Paciente");
     console.log("3. Eliminar Paciente");
     console.log("4. Listar Pacientes Activos");
     console.log("5. Dar de Alta a Paciente");      // <-- AÑADIDO
-    console.log("6. Ver Archivo Histórico");     // <-- AÑADIDO
-    console.log("7. Volver al Menú Principal");  // <-- ACTUALIZADO
+    console.log("6. Ver Archivo Historico");     // <-- AÑADIDO
+    console.log("7. Volver al Menu Principal");  // <-- ACTUALIZADO
 
     let opcion = readlineSync.question("Seleccione una opcion: ");
     switch (opcion) {
@@ -85,10 +85,10 @@ function mostrarMenuPacientes() {
             verArchivoHistorico();
             break;
         case "7": // <-- ACTUALIZADO
-            console.log(" Volviendo al menu principal...");
+            console.log("Volviendo al menu principal...");
             return;
         default:
-            console.log(" Opcion no valida.");
+            console.log("Opcion no valida.");
     }
     mostrarMenuPacientes();
 }
@@ -103,12 +103,12 @@ function registrarPaciente() {
         return;
     }
     
-    let numeroDocumento = validarNumero("Ingrese el número de documento: ", "Número de Documento");
-    let numeroHistoria = validarNumero("Ingrese el número de historia clínica: ", "Número de Historia Clínica");
+    let numeroDocumento = validarNumero("Ingrese el numero de documento: ", "Numero de Documento");
+    let numeroHistoria = validarNumero("Ingrese el numero de historia clinica: ", "Numero de Historia Clinica");
     let nombre = validarCampo("Ingrese el nombre: ", "Nombre");
     let apellidos = validarCampo("Ingrese los apellidos: ", "Apellidos");
-    let direccion = validarCampo("Ingrese la dirección: ", "Dirección");
-    let telefono = validarNumero("Ingrese el teléfono: ", "Teléfono");
+    let direccion = validarCampo("Ingrese la direccion: ", "Direccion");
+    let telefono = validarNumero("Ingrese el telefono: ", "Telefono");
     let fechaNacimiento = validarFecha("Ingrese la fecha de nacimiento (YYYY-MM-DD): ");
 
     let nuevoPaciente = new Paciente(
@@ -123,7 +123,7 @@ function registrarPaciente() {
     );
 
     pacientes.push(nuevoPaciente);
-    console.log(" Paciente registrado con éxito.");
+    console.log("Paciente registrado con exito.");
 }
 
 function modificarPaciente() {
@@ -132,7 +132,7 @@ function modificarPaciente() {
 
     let paciente = pacientes.find(p => p.id === id);
     if (!paciente) {
-        console.log(" Paciente no encontrado.");
+        console.log("Paciente no encontrado.");
         return;
     }
 
@@ -150,7 +150,7 @@ function modificarPaciente() {
     let nuevoTelefono = readlineSync.question(`Nuevo telefono (${paciente.telefono}): `).trim();
     if (nuevoTelefono && !isNaN(nuevoTelefono) && Number(nuevoTelefono) >= 0) paciente.telefono = nuevoTelefono;
 
-    console.log(" Paciente modificado con éxito.");
+    console.log("Paciente modificado con exito.");
 }
 
 function eliminarPaciente() {
@@ -159,12 +159,12 @@ function eliminarPaciente() {
 
     let indice = pacientes.findIndex(p => p.id === id);
     if (indice === -1) {
-        console.log(" Paciente no encontrado.");
+        console.log("Paciente no encontrado.");
         return;
     }
 
     pacientes.splice(indice, 1);
-    console.log(" Paciente eliminado con éxito.");
+    console.log("Paciente eliminado con exito.");
 }
 
 function listarPacientes() {
@@ -186,21 +186,21 @@ function darDeAltaPaciente() {
 
     let indice = pacientes.findIndex(p => p.id === id);
     if (indice === -1) {
-        console.log(" Paciente no encontrado en la lista de activos.");
+        console.log("Paciente no encontrado en la lista de activos.");
         return;
     }
 
     const pacienteDadoDeAlta = pacientes[indice];
-    pacientesHistoricos.push(pacienteDadoDeAlta); // Mover al histórico
+    pacientesHistoricos.push(pacienteDadoDeAlta); // Mover al historico
     pacientes.splice(indice, 1); // Eliminar de la lista activa
 
-    console.log(` Paciente ${pacienteDadoDeAlta.nombre} ${pacienteDadoDeAlta.apellidos} ha sido dado de alta y movido al archivo historico.`);
+    console.log(`Paciente ${pacienteDadoDeAlta.nombre} ${pacienteDadoDeAlta.apellidos} ha sido dado de alta y movido al archivo historico.`);
 }
 
 function verArchivoHistorico() {
-    console.log("\n--- Archivo Histórico de Pacientes ---");
+    console.log("\n--- Archivo Historico de Pacientes ---");
     if (pacientesHistoricos.length === 0) {
-        console.log("El archivo histórico está vacío.");
+        console.log("El archivo historico esta vacio.");
         return;
     }
 
