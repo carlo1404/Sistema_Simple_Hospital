@@ -2,7 +2,9 @@
 const readlineSync = require("readline-sync");
 const Empleado = require("../models/Empleado");
 
-let empleados = []; // Suponiendo que los médicos son un tipo de empleado
+let empleados = []; // Aca solo es una lista y suponiendo que los medicos son empleados
+
+// despues hacemos una funcion para validar los campos para que no esten vacios
 
 function validarCampo(mensaje, campo) {
     let valor;
@@ -45,6 +47,7 @@ function mostrarMenuEmpleados() {
     mostrarMenuEmpleados();
 }
 
+// esto si la opcion fue registrar empleado entonces lo llevara a este modulo 
 function registrarEmpleado() {
     console.log("\n--- Registro de MMedico ---");
     let id = validarCampo("Ingrese el código del medico: ", "Codigo");
